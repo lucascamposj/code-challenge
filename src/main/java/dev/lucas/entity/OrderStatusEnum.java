@@ -1,6 +1,6 @@
 package dev.lucas.entity;
 
-public enum OrderStatusType {
+public enum OrderStatusEnum {
     pending,
     shipped,
     delivered,

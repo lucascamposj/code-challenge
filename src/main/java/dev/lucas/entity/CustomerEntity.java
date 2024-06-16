@@ -12,17 +12,19 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "customers")
-public class Customer extends PanacheEntityBase {
+@Table(name = "customer")
+public class CustomerEntity extends PanacheEntityBase {
 
     @Id
     @GeneratedValue()
@@ -38,5 +40,6 @@ public class Customer extends PanacheEntityBase {
 
     @Column
     @CreationTimestamp
+    @EqualsAndHashCode.Exclude
     public ZonedDateTime createdAt;
 }

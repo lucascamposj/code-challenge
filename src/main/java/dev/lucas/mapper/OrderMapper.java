@@ -1,14 +1,14 @@
 package dev.lucas.mapper;
 
 import dev.lucas.dto.CreateOrderDTO;
-import dev.lucas.entity.Order;
+import dev.lucas.entity.OrderEntity;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class OrderMapper {
 
-    public Order toDAO(CreateOrderDTO orderDTO) {
-        return Order.builder()
+    public OrderEntity toDAO(CreateOrderDTO orderDTO) {
+        return OrderEntity.builder()
                 .items(orderDTO.getItems())
                 .price(orderDTO.getPrice())
                 .status(orderDTO.getStatus())

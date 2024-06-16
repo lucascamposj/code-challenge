@@ -1,6 +1,6 @@
 package dev.lucas.entity;
 
-public enum PaymentMethodType {
+public enum PaymentMethodEnum {
     credit_card,
     cash,
     other,

@@ -1,24 +1,20 @@
 package dev.lucas.controller;
 
-import java.util.ArrayList;
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
 import dev.lucas.dto.CreateOrderDTO;
 import dev.lucas.dto.UpdateOrderDTO;
-import dev.lucas.entity.Order;
+import dev.lucas.entity.OrderEntity;
 import dev.lucas.service.OrderService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.PATCH;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.QueryParam;
-import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.*;
+
+import static jakarta.ws.rs.core.Response.Status.BAD_REQUEST;
+import static jakarta.ws.rs.core.Response.Status.NOT_FOUND;
 
 @Path("/api/order")
 public class OrderController {
@@ -28,23 +24,22 @@ public class OrderController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Order> findAll() {
-
-        List<Order> orders = new ArrayList<>();
-        try {
-            orders = orderService.findAll();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return orders;
+    public Response findAll() {
+        List<OrderEntity> orders = orderService.findAll();
+        return Response.ok(orders).build();
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
-    public Order create(CreateOrderDTO orderDto) {
-        return orderService.create(orderDto);
+    public Response create(CreateOrderDTO orderDto) {
+        try {
+            OrderEntity entity = orderService.create(orderDto);
+            return Response.created(URI.create("/api/order/" + entity.getId())).build();
+        } catch (BadRequestException e) {
+            return Response.status(BAD_REQUEST).build();
+        }
     }
 
     @PATCH
@@ -52,21 +47,36 @@ public class OrderController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{id}")
     @Transactional
-    public Order update(@PathParam("id") String id, UpdateOrderDTO dto) {
-        return orderService.update(UUID.fromString(id), dto.getStatus());
+    public Response update(@PathParam("id") String id, UpdateOrderDTO dto) {
+        try {
+            OrderEntity order = orderService.update(UUID.fromString(id), dto);
+            return Response.ok(order).build();
+        } catch (NotFoundException e) {
+            return Response.status(NOT_FOUND).build();
+        }
     }
 
     @GET
     @Path("/search")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Order> findByCustomerId(@QueryParam("customerId") String customerId) {
-        return orderService.findByCustomerId(UUID.fromString(customerId));
+    public Response findByCustomerId(@QueryParam("customerId") String customerId) {
+        try {
+            List<OrderEntity> orders = orderService.findByCustomerId(UUID.fromString(customerId));
+            return Response.ok(orders).build();
+        } catch (NotFoundException e) {
+            return Response.status(NOT_FOUND).build();
+        }
     }
 
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Order findById(@PathParam("id") String id) {
-        return orderService.findById(UUID.fromString(id));
+    public Response findById(@PathParam("id") String id) {
+        try {
+            OrderEntity order = orderService.findById(UUID.fromString(id));
+            return Response.ok(order).build();
+        } catch (NotFoundException e) {
+            return Response.status(NOT_FOUND).build();
+        }
     }
 }

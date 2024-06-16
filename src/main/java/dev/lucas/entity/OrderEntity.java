@@ -32,8 +32,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Entity
-@Table(name = "orders")
-public class Order extends PanacheEntityBase {
+@Table(name = "customer_order")
+public class OrderEntity extends PanacheEntityBase {
     @Id
     @GeneratedValue
     private UUID id;
@@ -48,23 +48,25 @@ public class Order extends PanacheEntityBase {
     public List<String> items;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.ORDINAL)
-    public PaymentMethodType paymentMethod;
+    @Enumerated(EnumType.STRING)
+    public PaymentMethodEnum paymentMethod;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.ORDINAL)
-    public OrderStatusType status;
+    @Enumerated(EnumType.STRING)
+    public OrderStatusEnum status;
 
     @Column
     @CreationTimestamp
+    @EqualsAndHashCode.Exclude
     public ZonedDateTime createdAt;
 
     @Column
     @UpdateTimestamp
+    @EqualsAndHashCode.Exclude
     public ZonedDateTime updatedAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customerId")
     @JsonIgnore
-    public Customer customer;
+    public CustomerEntity customer;
 }

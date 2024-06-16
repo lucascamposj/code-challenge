@@ -3,7 +3,9 @@ package dev.lucas.service;
 import java.util.List;
 import java.util.UUID;
 
-import dev.lucas.entity.Customer;
+import dev.lucas.dto.CreateCustomerDTO;
+import dev.lucas.entity.CustomerEntity;
+import dev.lucas.mapper.CustomerMapper;
 import dev.lucas.repository.CustomerRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -16,33 +18,36 @@ public class CustomerService {
     @Inject
     CustomerRepository customerRepository;
 
-    public List<Customer> findAllCustomers() {
+    @Inject
+    CustomerMapper customerMapper;
+
+    public List<CustomerEntity> findAllCustomers() {
         return customerRepository.listAll();
     }
 
-    public Customer create(Customer customer) {
+    public CustomerEntity create(CreateCustomerDTO customerDTO) {
 
-        Customer entity = customerRepository.findByEmail(customer.email);
+        CustomerEntity entity = customerRepository.findByEmail(customerDTO.getEmail());
         if (entity != null) {
-            throw new BadRequestException("Customer already exists");
+            throw new BadRequestException("Customer already exists.");
         }
-
+        CustomerEntity customer = customerMapper.toDAO(customerDTO);
         customerRepository.persist(customer);
         return customer;
     }
 
-    public Customer findByEmail(String email) {
-        Customer entity = customerRepository.findByEmail(email);
+    public CustomerEntity findByEmail(String email) {
+        CustomerEntity entity = customerRepository.findByEmail(email);
         if (entity == null) {
-            throw new NotFoundException();
+            throw new NotFoundException("Customer not found by email.");
         }
         return entity;
     }
 
-    public Customer findById(UUID id) {
-        Customer entity = customerRepository.findById(id);
+    public CustomerEntity findById(UUID id) {
+        CustomerEntity entity = customerRepository.findById(id);
         if (entity == null) {
-            throw new NotFoundException();
+            throw new NotFoundException("Customer not found by email.");
         }
         return entity;
     }

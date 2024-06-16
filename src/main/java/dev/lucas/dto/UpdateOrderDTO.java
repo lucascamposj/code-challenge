@@ -1,6 +1,6 @@
 package dev.lucas.dto;
 
-import dev.lucas.entity.OrderStatusType;
+import dev.lucas.entity.OrderStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateOrderDTO {
-    private OrderStatusType status;
+    private OrderStatusEnum status;
 }

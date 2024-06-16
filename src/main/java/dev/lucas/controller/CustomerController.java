@@ -1,21 +1,19 @@
 package dev.lucas.controller;
 
-import java.util.ArrayList;
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
-import dev.lucas.entity.Customer;
+import dev.lucas.dto.CreateCustomerDTO;
+import dev.lucas.entity.CustomerEntity;
 import dev.lucas.service.CustomerService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.QueryParam;
-import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.*;
+
+import static jakarta.ws.rs.core.Response.Status.BAD_REQUEST;
+import static jakarta.ws.rs.core.Response.Status.NOT_FOUND;
 
 @Path("/api/customer")
 public class CustomerController {
@@ -25,37 +23,41 @@ public class CustomerController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Customer> findAll() {
-
-        List<Customer> customers = new ArrayList<>();
-        try {
-            customers = customerService.findAllCustomers();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return customers;
+    public Response findAll() {
+        List<CustomerEntity> customers = customerService.findAllCustomers();
+        return Response.ok(customers).build();
     }
 
     @GET
     @Path("/search")
     @Produces(MediaType.APPLICATION_JSON)
-    public Customer findByEmail(@QueryParam("email") String email) {
-        return customerService.findByEmail(email);
+    public Response findByEmail(@QueryParam("email") String email) {
+        try {
+            CustomerEntity customer = customerService.findByEmail(email);
+            return Response.ok(customer).build();
+        } catch (NotFoundException e) {
+            return Response.status(NOT_FOUND).build();
+        }
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
-    public Customer create(Customer customer) {
-        customerService.create(customer);
-        return customer;
+    public Response create(CreateCustomerDTO customerDTO) {
+        try {
+            CustomerEntity customer = customerService.create(customerDTO);
+            return Response.created(URI.create("/api/customer/" + customer.getId())).build();
+        } catch (BadRequestException e) {
+            return Response.status(BAD_REQUEST).build();
+        }
     }
 
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Customer findById(@PathParam("id") String id) {
-        return customerService.findById(UUID.fromString(id));
+    public Response findById(@PathParam("id") String id) {
+        CustomerEntity customer = customerService.findById(UUID.fromString(id));
+        return Response.ok(customer).build();
     }
 }
