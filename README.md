@@ -108,6 +108,19 @@ Or, if you don't have GraalVM installed, you can run the native executable build
 
 You can then execute your native executable with: `./target/backend-1.0.0-SNAPSHOT-runner`
 
+## Fault Tolerance
+
+This project includes an example of fault tolerance using SmallRye Fault Tolerance.
+
+The example configuration can be found on `backend/src/main/java/dev/lucas/controller/CustomerController.java`
+
+The configuration includes fault tolerance strategies such as:
+
+- Retries
+- Timeouts
+- Circuit Breaker
+- Rate Limits
+
 # Frontend
 
 All the frontend code can be found on the folder `/frontend`
@@ -144,4 +157,10 @@ The application will be available at http://localhost:4200
 This project some to do on the frontend part:
 
 - Connect the frontend with the backend, currently all data is mocked
-- Add card state funcionality
+- Add shopping cart state funcionality
+
+On the backend some improvements can be made:
+
+- Improve validation and constrains of requests using Hibernate
+- Generic payload and error abstractions
+- Add more endpoints
