@@ -26,6 +26,9 @@ Frontend:
 - [TailwindCSS](https://tailwindcss.com/)
 - [Jest](https://jestjs.io/)
 - [FakeStoreAPI](https://fakestoreapi.com/)
+- [NgRx](https://ngrx.io/)
+- [NgRx Effects](https://ngrx.io/guide/component-store/effect)
+- [Primeng](https://primeng.org/)
 
 # backend
 
@@ -154,14 +157,15 @@ The application will be available at http://localhost:4200
 /cart - View cart page
 /orders - View orders history page
 
-## To do
+## TODOs & Improvements
 
-This project some to do on the frontend part:
+This project have improvements to be done on the frontend:
 
-- Connect the frontend with the backend, currently all data is mocked
-- Add shopping cart state funcionality
+- More error states fallbacks
+- Protected routing
+- Improve footer
 
-On the backend some improvements can be made:
+On the backend some improvements can be made as well:
 
 - Improve validation and constrains of requests using Hibernate
 - Generic payload and error abstractions
