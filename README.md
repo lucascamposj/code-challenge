@@ -17,6 +17,8 @@ Backend:
 - [Mockito](https://site.mockito.org/)
 - [RestAssured](https://rest-assured.io/)
 - [JUnit5](https://junit.org/junit5/)
+- [SmallRye Fault-Tolerance](https://github.com/smallrye/smallrye-fault-tolerance/)
+- [H2 Database for testing](https://www.h2database.com/html/main.html)
 
 Frontend:
 
