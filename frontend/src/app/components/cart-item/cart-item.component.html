@@ -11,4 +11,7 @@
     <div class="w-full">
         <p class="text-3xl mb-2 font-black text-right">${{ product.price }}</p>
     </div>
+    <div class="w-full">
+        <button class="w-full bg-red-500 rounded-md p-2 text-white font-semibold hover:bg-red-400 shadow-md" (click)="removeItem(product)">Remove item</button>
+    </div>
 </div>

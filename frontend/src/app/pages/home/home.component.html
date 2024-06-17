@@ -1,12 +1,17 @@
-<div class="flex justify-cente items-center">
+<div class="flex flex-col justify-center items-center">
+    <h1 class="text-left text-3xl font-black mb-5">Products</h1>
     <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4  gap-4 m-auto">
+        <p *ngIf="isLoading$ | async">Loading products...</p>
         <app-product
-          *ngFor="let product of products"
+          *ngFor="let product of allProducts$ | async"
           [product]="product"
         ></app-product>
         <div class="fixed md:bottom-16 md:right-16 bottom-4 right-4">
-          <button (click)="gotoCart()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-full shadow-lg text-2xl">
-            Cart (0)
+          <button *ngIf="(cartQuantity$ | async) === 0" class="bg-blue-200 text-white font-bold py-4 px-6 rounded-full shadow-lg text-2xl cursor-pointer">
+            Card empty
+          </button>
+          <button *ngIf="(cartQuantity$ | async) !== 0" (click)="gotoCart()" class="bg-blue-500 disabled:bg-blue-200 hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-full shadow-lg text-2xl cursor-pointer">
+            Cart ({{allCartItems$ | async}} items)
           </button>
         </div>
     </div>

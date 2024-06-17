@@ -26,7 +26,7 @@ public class CustomerIntegrationTest {
         public void getAll() {
                 given().contentType(ContentType.JSON)
                                 .when()
-                                .get("/api/customer")
+                                .get("/v1/customer")
                                 .then().statusCode(200)
                                 .body("size()", equalTo(2))
                                 .body("id", hasItems("64b0834e-f350-4976-8a98-48ec117d72b1",
@@ -41,7 +41,7 @@ public class CustomerIntegrationTest {
         void getById() {
                 given()
                                 .when()
-                                .get("/api/customer/afff3cb4-c290-42c5-84f4-56ab644dcd1a")
+                                .get("/v1/customer/afff3cb4-c290-42c5-84f4-56ab644dcd1a")
                                 .then()
                                 .body("id", equalTo("afff3cb4-c290-42c5-84f4-56ab644dcd1a"))
                                 .body("name", equalTo("First User"))
@@ -54,7 +54,7 @@ public class CustomerIntegrationTest {
         void getById_NotFound() {
                 given()
                                 .when()
-                                .get("/api/customer/" + UUID.randomUUID())
+                                .get("/v1/customer/" + UUID.randomUUID())
                                 .then()
                                 .statusCode(Response.Status.NOT_FOUND.getStatusCode());
         }
@@ -64,7 +64,7 @@ public class CustomerIntegrationTest {
         void getByEmail() {
                 given()
                                 .when()
-                                .get("/api/customer?email=second_user@email.com")
+                                .get("/v1/customer?email=second_user@email.com")
                                 .then()
                                 .body("id", equalTo("64b0834e-f350-4976-8a98-48ec117d72b1"))
                                 .body("name", equalTo("Second User"))
@@ -77,7 +77,7 @@ public class CustomerIntegrationTest {
         void getByEmail_NotFound() {
                 given()
                                 .when()
-                                .get("/api/customer?email=not_found@email.com")
+                                .get("/v1/customer?email=not_found@email.com")
                                 .then()
                                 .statusCode(Response.Status.NOT_FOUND.getStatusCode());
         }
@@ -92,8 +92,10 @@ public class CustomerIntegrationTest {
 
                 given().contentType(ContentType.JSON).and().body(jsonObject.toString())
                                 .when()
-                                .post("/api/customer")
+                                .post("/v1/customer")
                                 .then()
+                                .body("name", equalTo("Third Customer"))
+                                .body("email", equalTo("third_user@email.com"))
                                 .statusCode(Response.Status.CREATED.getStatusCode());
         }
 
@@ -107,7 +109,7 @@ public class CustomerIntegrationTest {
 
                 given().contentType(ContentType.JSON).and().body(jsonObject.toString())
                                 .when()
-                                .post("/api/customer")
+                                .post("/v1/customer")
                                 .then()
                                 .statusCode(Response.Status.BAD_REQUEST.getStatusCode());
         }

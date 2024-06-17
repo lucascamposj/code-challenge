@@ -1,8 +1,15 @@
 <div class="flex justify-cente items-center">
     <div class="flex flex-col gap-4 m-auto">
+        <h1 class="text-left text-3xl font-black mb-5">Your orders</h1>
         <app-order-item
-          *ngFor="let order of orders"
+          *ngFor="let order of orders$ | async"
           [order]="order"
         ></app-order-item>
+        <div class="fixed md:bottom-16 md:right-16 bottom-4 right-4">
+          <button (click)="goBack()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-full shadow-lg text-xl">
+            <p>Buy some more!
+            </p>
+          </button>
+        </div>
     </div>
 </div>

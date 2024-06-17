@@ -16,7 +16,7 @@ import jakarta.ws.rs.core.*;
 import static jakarta.ws.rs.core.Response.Status.BAD_REQUEST;
 import static jakarta.ws.rs.core.Response.Status.NOT_FOUND;
 
-@Path("/api/order")
+@Path("/v1/order")
 public class OrderController {
 
     @Inject
@@ -45,7 +45,7 @@ public class OrderController {
     public Response create(CreateOrderDTO orderDto) {
         try {
             OrderEntity entity = orderService.create(orderDto);
-            return Response.created(URI.create("/api/order/" + entity.getId())).build();
+            return Response.created(URI.create("/v1/order/" + entity.getId())).build();
         } catch (BadRequestException e) {
             return Response.status(BAD_REQUEST).build();
         }

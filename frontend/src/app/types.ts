@@ -33,8 +33,8 @@ export interface Product {
   price: number;
   category: string;
   image: string;
+  selected?: boolean;
 }
-
 
 export interface Order {
   address: string;
@@ -42,7 +42,8 @@ export interface Order {
   paymentMethod: string;
   items: string[];
   status: Status;
+  createdAt: string;
 }
 
-export type PaymentMethod = 'credit_card' |  'debit_card' | 'cash' | 'other';
-export type Status = 'pending' |  'shipped' | 'delivered' | 'canceled';
+export type PaymentMethod = 'credit_card' | 'cash' | 'other';
+export type Status = 'pending' | 'shipped' | 'delivered' | 'canceled';

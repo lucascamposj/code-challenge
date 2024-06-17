@@ -24,7 +24,7 @@ public class OrderIntegrationTest {
         public void getAll() {
                 given().contentType(ContentType.JSON)
                                 .when()
-                                .get("/api/order")
+                                .get("/v1/order")
                                 .then().statusCode(200)
                                 .body("size()", equalTo(1))
                                 .body("id", hasItems("3d9d6c17-39a0-4487-9b7c-c24ea6626271"))
@@ -43,7 +43,7 @@ public class OrderIntegrationTest {
         void getById() {
                 given()
                                 .when()
-                                .get("/api/order/3d9d6c17-39a0-4487-9b7c-c24ea6626271")
+                                .get("/v1/order/3d9d6c17-39a0-4487-9b7c-c24ea6626271")
                                 .then()
                                 .body("id", equalTo("3d9d6c17-39a0-4487-9b7c-c24ea6626271"))
                                 .body("address", equalTo("Street 28"))
@@ -60,7 +60,7 @@ public class OrderIntegrationTest {
         void getByIdNotFound() {
                 given()
                                 .when()
-                                .get("/api/order/3d9d6c17-39a0-4487-9b7c-c24ea1234556")
+                                .get("/v1/order/3d9d6c17-39a0-4487-9b7c-c24ea1234556")
                                 .then()
                                 .statusCode(Response.Status.NOT_FOUND.getStatusCode());
         }
@@ -70,7 +70,7 @@ public class OrderIntegrationTest {
         void getByCustomerId() {
                 given()
                                 .when()
-                                .get("/api/order?customer-id=afff3cb4-c290-42c5-84f4-56ab644dcd1a")
+                                .get("/v1/order?customer-id=afff3cb4-c290-42c5-84f4-56ab644dcd1a")
                                 .then()
                                 .body("size()", equalTo(1))
                                 .body("[0].id", equalTo("3d9d6c17-39a0-4487-9b7c-c24ea6626271"))
@@ -88,7 +88,7 @@ public class OrderIntegrationTest {
         void getByCustomerIdNotFound() {
                 given()
                                 .when()
-                                .get("/api/order?customer-id=afff3cb4-c290-42c5-84f4-56ab644da12")
+                                .get("/v1/order?customer-id=afff3cb4-c290-42c5-84f4-56ab644da12")
                                 .then()
                                 .statusCode(Response.Status.NOT_FOUND.getStatusCode());
         }
@@ -107,7 +107,7 @@ public class OrderIntegrationTest {
 
                 given().contentType(ContentType.JSON).and().body(jsonObject.toString())
                                 .when()
-                                .post("/api/order")
+                                .post("/v1/order")
                                 .then()
                                 .statusCode(Response.Status.CREATED.getStatusCode());
         }
@@ -121,7 +121,7 @@ public class OrderIntegrationTest {
 
                 given().contentType(ContentType.JSON).and().body(jsonObject.toString())
                                 .when()
-                                .patch("/api/order/3d9d6c17-39a0-4487-9b7c-c24ea6626271")
+                                .patch("/v1/order/3d9d6c17-39a0-4487-9b7c-c24ea6626271")
                                 .then()
                                 .body("id", equalTo("3d9d6c17-39a0-4487-9b7c-c24ea6626271"))
                                 .body("address", equalTo("Street 28"))
@@ -142,7 +142,7 @@ public class OrderIntegrationTest {
 
                 given().contentType(ContentType.JSON).and().body(jsonObject.toString())
                                 .when()
-                                .patch("/api/order/3d9d6c17-39a0-4487-9b7c-c24ea6626272")
+                                .patch("/v1/order/3d9d6c17-39a0-4487-9b7c-c24ea6626272")
                                 .then()
                                 .statusCode(Response.Status.NOT_FOUND.getStatusCode());
         }

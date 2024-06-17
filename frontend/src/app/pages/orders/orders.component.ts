@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
-import { Order } from '../../types';
+import { Component, inject } from '@angular/core';
 import { OrderItemComponent } from '../../components/order-item/order-item.component';
 import { CommonModule } from '@angular/common';
+import { Store } from '@ngrx/store';
+import { loadOrders } from '../../state/order/order.actions';
+import { selectAllOrders } from '../../state/order/order.selectors';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-orders',
@@ -11,27 +14,18 @@ import { CommonModule } from '@angular/common';
   styleUrl: './orders.component.scss',
 })
 export class OrdersComponent {
-  orders: Order[] = [
-    {
-      address: 'Street 27',
-      price: 130,
-      paymentMethod: 'credit_card',
-      items: [
-        'Mens Cotton Jacket',
-        'White Gold Plated Princess',
-        'Solid Gold Petite Micropave',
-      ],
-      status: 'pending',
-    },
-    {
-      items: [
-        'Mens Casual Slim Fit',
-        'John Hardy Womens Legends Naga Gold & Silver Dragon Station Chain Bracelet',
-      ],
-      price: 150.99,
-      address: 'Park Avenue 27',
-      paymentMethod: 'cash',
-      status: 'shipped',
-    },
-  ];
+  constructor(private router: Router) {}
+  private readonly store = inject(Store);
+  public orders$ = this.store.select(selectAllOrders);
+
+  ngOnInit() {
+    this.orders$.subscribe((items) => {
+      this.store.dispatch(loadOrders());
+    });
+  }
+
+  goBack(): void {
+    const navigationDetails = ['/home'];
+    this.router.navigate(navigationDetails);
+  }
 }

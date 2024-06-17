@@ -1,9 +1,14 @@
-import { Component } from '@angular/core';
-import { ProductsService } from '../../services/products.service';
-import { Product } from '../../types';
+import { Component, inject } from '@angular/core';
 import { ProductComponent } from '../../components/product/product.component';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import {
+  isLoading,
+  selectAllCartItemsLength,
+  selectAllProducts,
+} from '../../state/cart/cart.selectors';
+import { loadCartItems } from '../../state/cart/cart.actions';
 
 @Component({
   selector: 'app-home',
@@ -13,12 +18,14 @@ import { Router } from '@angular/router';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
-  constructor(
-    private productsService: ProductsService,
-    private router: Router
-  ) {}
+  constructor(private router: Router) {}
 
-  products: Product[] = [];
+  private readonly store = inject(Store);
+
+  public allCartItems$ = this.store.select(selectAllCartItemsLength);
+  public allProducts$ = this.store.select(selectAllProducts);
+  public isLoading$ = this.store.select(isLoading);
+  public cartQuantity$ = this.store.select(selectAllCartItemsLength);
 
   gotoCart(): void {
     const navigationDetails = ['/cart'];
@@ -26,10 +33,10 @@ export class HomeComponent {
   }
 
   ngOnInit() {
-    this.productsService
-      .getProducts('https://fakestoreapi.com/products')
-      .subscribe((products) => {
-        this.products = products;
-      });
+    this.allProducts$.subscribe((items) => {
+      if (items.length == 0) {
+        this.store.dispatch(loadCartItems());
+      }
+    });
   }
 }

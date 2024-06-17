@@ -1,6 +1,5 @@
 package dev.lucas.controller;
 
-import java.net.URI;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.UUID;
@@ -19,9 +18,10 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 
 import static jakarta.ws.rs.core.Response.Status.BAD_REQUEST;
+import static jakarta.ws.rs.core.Response.Status.CREATED;
 import static jakarta.ws.rs.core.Response.Status.NOT_FOUND;
 
-@Path("/api/customer")
+@Path("/v1/customer")
 public class CustomerController {
 
     @Inject
@@ -54,7 +54,7 @@ public class CustomerController {
     public Response create(CreateCustomerDTO customerDTO) {
         try {
             CustomerEntity customer = customerService.create(customerDTO);
-            return Response.created(URI.create("/api/customer/" + customer.getId())).build();
+            return Response.ok(customer).status(CREATED).build();
         } catch (BadRequestException e) {
             return Response.status(BAD_REQUEST).build();
         }
