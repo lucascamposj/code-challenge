@@ -1,0 +1,8 @@
+<div class="flex justify-cente items-center">
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4  gap-4 m-auto">
+        <app-product
+          *ngFor="let product of products"
+          [product]="product"
+        ></app-product>
+    </div>
+</div>

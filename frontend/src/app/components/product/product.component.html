@@ -1,0 +1,16 @@
+<div class="flex flex-col p-2 rounded-md border-2 border-gray-100 flex-1 md:w-64 justify-between">
+    <div>
+        <div class="h-64 p-10 m-4" >
+            <img class="object-contain" src={{product.image}} />
+        </div>
+        <h1 class="text-lg font-semibold max-h-24 text-ellipsis text-nowrap overflow-hidden">{{ product.title }}</h1>
+        <div>
+            <h2 class="text-sm bg-gray-100 font-serif w-fit px-1.5 py-1.5 mt-2 rounded-xl">{{ product.category }}</h2>
+        </div>
+    </div>
+    <div class="w-full">
+        <p class="text-3xl mb-2 font-black text-right">${{ product.price }}</p>
+        <button class="w-full bg-green-500 rounded-md p-2 text-white font-semibold hover:bg-green-400">Add to cart</button>
+    </div>
+</div>
+
