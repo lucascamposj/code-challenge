@@ -23,21 +23,18 @@ public class CustomerController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findAll() {
+    public Response find(@QueryParam("email") String email) {
+        if (email != null) {
+            try {
+                CustomerEntity customer = customerService.findByEmail(email);
+                return Response.ok(customer).build();
+            } catch (NotFoundException e) {
+                return Response.status(NOT_FOUND).build();
+            }
+        }
         List<CustomerEntity> customers = customerService.findAllCustomers();
         return Response.ok(customers).build();
-    }
 
-    @GET
-    @Path("/search")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response findByEmail(@QueryParam("email") String email) {
-        try {
-            CustomerEntity customer = customerService.findByEmail(email);
-            return Response.ok(customer).build();
-        } catch (NotFoundException e) {
-            return Response.status(NOT_FOUND).build();
-        }
     }
 
     @POST

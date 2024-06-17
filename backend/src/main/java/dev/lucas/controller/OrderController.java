@@ -24,9 +24,18 @@ public class OrderController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findAll() {
-        List<OrderEntity> orders = orderService.findAll();
-        return Response.ok(orders).build();
+    public Response find(@QueryParam("customer-id") String customerId) {
+        if (customerId == null) {
+            List<OrderEntity> orders = orderService.findAll();
+            return Response.ok(orders).build();
+        }
+        try {
+            List<OrderEntity> orders = orderService.findByCustomerId(UUID.fromString(customerId));
+            return Response.ok(orders).build();
+        } catch (NotFoundException e) {
+            return Response.status(NOT_FOUND).build();
+        }
+
     }
 
     @POST
@@ -51,18 +60,6 @@ public class OrderController {
         try {
             OrderEntity order = orderService.update(UUID.fromString(id), dto);
             return Response.ok(order).build();
-        } catch (NotFoundException e) {
-            return Response.status(NOT_FOUND).build();
-        }
-    }
-
-    @GET
-    @Path("/search")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response findByCustomerId(@QueryParam("customerId") String customerId) {
-        try {
-            List<OrderEntity> orders = orderService.findByCustomerId(UUID.fromString(customerId));
-            return Response.ok(orders).build();
         } catch (NotFoundException e) {
             return Response.status(NOT_FOUND).build();
         }
