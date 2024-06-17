@@ -1,0 +1,21 @@
+<div class="flex flex-col gap-4 p-2 rounded-md flex-1 justify-between shadow-lg">
+    <div>
+        <p class="text-sm w-fit">Address</p>
+        <h1 class="text-lg font-semibold text-ellipsis text-nowrap overflow-hidden mb-3">{{ order.address }}</h1>
+        <div class="flex flex-col">
+            <p class="text-sm font-serif w-fit">Payment Method: {{ order.paymentMethod }}</p>
+            <p class="text-sm font-serif w-fit">Status: {{ order.status }}</p>
+        </div>
+        <p class="mt-4 text-lg font-semibold">Items</p>
+        <ul
+          *ngFor="let item of order.items"
+        >
+            <div class="pl-5">
+                <li class="list-disc">{{item}}</li>
+            </div>
+        </ul>
+    </div>
+    <div class="w-full mt-3">
+        <p class="text-3xl mb-2 font-black text-right">${{ order.price }}</p>
+    </div>
+</div>

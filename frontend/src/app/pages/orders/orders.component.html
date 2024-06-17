@@ -1,0 +1,8 @@
+<div class="flex justify-cente items-center">
+    <div class="flex flex-col gap-4 m-auto">
+        <app-order-item
+          *ngFor="let order of orders"
+          [order]="order"
+        ></app-order-item>
+    </div>
+</div>

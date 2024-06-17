@@ -2,14 +2,12 @@ import { Component, Input } from '@angular/core';
 import { Product } from '../../types';
 
 @Component({
-  selector: 'app-product',
+  selector: 'app-cart-item',
   standalone: true,
   imports: [],
-  templateUrl: './product.component.html',
-  styleUrl: './product.component.scss',
+  templateUrl: './cart-item.component.html',
+  styleUrl: './cart-item.component.scss',
 })
-export class ProductComponent {
-
+export class CartItemComponent {
   @Input() product!: Product;
-
 }

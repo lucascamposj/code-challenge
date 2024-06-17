@@ -32,6 +32,17 @@ export interface Product {
   title: string;
   price: number;
   category: string;
-  description: string;
   image: string;
 }
+
+
+export interface Order {
+  address: string;
+  price: number;
+  paymentMethod: string;
+  items: string[];
+  status: Status;
+}
+
+export type PaymentMethod = 'credit_card' |  'debit_card' | 'cash' | 'other';
+export type Status = 'pending' |  'shipped' | 'delivered' | 'canceled';
