@@ -1,6 +1,6 @@
-<h4 align="center">
+<h1 align="center">
   Full Stack application Store using FakeStoreAPI
-</h4>
+</h1>
 
 ## Screenshots
 
