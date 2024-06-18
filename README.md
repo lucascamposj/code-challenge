@@ -45,7 +45,7 @@ Frontend:
 - [NgRx Effects](https://ngrx.io/guide/component-store/effect)
 - [Primeng](https://primeng.org/)
 
-# backend
+# Backend
 
 All the backend code can be found on the folder `/backend`
 
