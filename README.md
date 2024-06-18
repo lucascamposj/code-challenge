@@ -2,6 +2,21 @@
   Full Stack application Store using FakeStoreAPI
 </h4>
 
+## Screenshots
+
+<div align="center">
+<img width="200" src="https://github.com/lucascamposj/code-challenge/assets/22333534/4871f28e-1daf-4bc5-b380-aca6c67a901a">
+<img width="200" src="https://github.com/lucascamposj/code-challenge/assets/22333534/3832c404-4106-44d2-ae7b-b109903f2b71">
+<img width="200" src="https://github.com/lucascamposj/code-challenge/assets/22333534/dfe85fe2-df0e-44b5-917f-2ba80f48f323">
+<img width="200" src="https://github.com/lucascamposj/code-challenge/assets/22333534/6df197b4-4bf7-48c6-814b-8ad8ebca2ffd">
+</div>
+
+## Video Demo
+
+Click to watch the video!
+
+[![Watch the video demo](https://img.youtube.com/vi/cfqMql8btEk/maxresdefault.jpg)](https://youtu.be/cfqMql8btEk)
+
 ## Tools
 
 Backend:
@@ -152,10 +167,10 @@ The application will be available at http://localhost:4200
 
 ## Routes
 
-/ - Login Page
-/home - Catalog Page
-/cart - View cart page
-/orders - View orders history page
+- / - Login Page
+- /home - Catalog Page
+- /cart - View cart page
+- /orders - View orders history page
 
 ## TODOs & Improvements
 
